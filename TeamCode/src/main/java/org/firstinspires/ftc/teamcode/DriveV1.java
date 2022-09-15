@@ -52,7 +52,7 @@ public class DriveV1 extends OpMode {
         M1 = hardwareMap.get(DcMotor.class,"M1");
         M2 = hardwareMap.get(DcMotor.class,"M2");
         M3 = hardwareMap.get(DcMotor.class,"M3");
-        M0_2 = hardwareMap.get(DcMotor.class,"M0_2")
+        M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
 
         //Set Motors
         M0.setDirection(DcMotor.Direction.FORWARD);

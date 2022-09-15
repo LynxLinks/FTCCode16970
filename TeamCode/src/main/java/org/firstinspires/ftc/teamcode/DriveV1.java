@@ -37,12 +37,16 @@ public class DriveV1 extends OpMode {
         M2.setPower(Rotate + (yAxis - xAxis));
         M3.setPower(Rotate + (-yAxis - xAxis));
 
-        if (gamepad1.left_stick_y<-0.1) {
+        if (gamepad1.right_stick_y<-0.1) {
             M0_2.setPower(1);}
-        else if (gamepad1.left_stick_y>0.1){
+        else if (gamepad1.right_stick_y>0.1){
             M0_2.setPower(-1);}
+        else {
+            M0_2.setPower(0);
+        }
 
     }
+
 
     //init sequence
     @Override

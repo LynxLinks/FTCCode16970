@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 //name and class
 
-@TeleOp(name = "DriveV1", group="Linear Opmode")
+@TeleOp(name = "DriveV2", group="Linear Opmode")
 
 
 public class DriveV1 extends OpMode {
@@ -27,13 +27,13 @@ public class DriveV1 extends OpMode {
         //input to change variables
         yAxis = gamepad1.left_stick_y;
         xAxis = gamepad1.left_stick_x;
-        Rotate = gamepad1.left_trigger+gamepad1.right_trigger;
+        Rotate = -gamepad1.left_trigger+gamepad1.right_trigger;
 
         //apply variables to motor
-        M0.setPower(Rotate + (yAxis + xAxis));
-        M1.setPower(Rotate + (yAxis + xAxis));
-        M2.setPower(Rotate + (yAxis + xAxis));
-        M3.setPower(Rotate + (yAxis + xAxis));
+        M0.setPower(Rotate + (yAxis - xAxis));
+        M1.setPower(Rotate + (-yAxis + xAxis));
+        M2.setPower(Rotate + (yAxis - xAxis));
+        M3.setPower(Rotate + (-yAxis + xAxis));
 
     }
 

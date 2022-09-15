@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 //name and class
 
@@ -16,6 +17,7 @@ public class DriveV1 extends OpMode {
     DcMotor M1;
     DcMotor M2;
     DcMotor M3;
+    DcMotor M0_2;
 
     //drive loop
     public void MoveDriveTrain(){
@@ -30,10 +32,10 @@ public class DriveV1 extends OpMode {
         Rotate = -gamepad1.left_trigger+gamepad1.right_trigger;
 
         //apply variables to motor
-        M0.setPower(Rotate + (yAxis - xAxis));
-        M1.setPower(Rotate + (-yAxis + xAxis));
+        M0.setPower(Rotate + (-yAxis + xAxis));
+        M1.setPower(Rotate + (+yAxis + xAxis));
         M2.setPower(Rotate + (yAxis - xAxis));
-        M3.setPower(Rotate + (-yAxis + xAxis));
+        M3.setPower(Rotate + (-yAxis - xAxis));
 
     }
 
@@ -45,6 +47,7 @@ public class DriveV1 extends OpMode {
         M1 = hardwareMap.get(DcMotor.class,"M1");
         M2 = hardwareMap.get(DcMotor.class,"M2");
         M3 = hardwareMap.get(DcMotor.class,"M3");
+        M0_2 = hardwareMap.get(DcMotor.class,"M0_2")
 
         //Set Motors
         M0.setDirection(DcMotor.Direction.FORWARD);
@@ -55,7 +58,9 @@ public class DriveV1 extends OpMode {
         M2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         M3.setDirection(DcMotor.Direction.FORWARD);
         M3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        M0_2.setDirection(DcMotor.Direction.FORWARD);
+        M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     //loop while init

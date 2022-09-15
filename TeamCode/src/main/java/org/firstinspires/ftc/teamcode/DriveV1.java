@@ -37,6 +37,11 @@ public class DriveV1 extends OpMode {
         M2.setPower(Rotate + (yAxis - xAxis));
         M3.setPower(Rotate + (-yAxis - xAxis));
 
+        if (gamepad1.left_stick_y<-0.1) {
+            M0_2.setPower(1);}
+        else if (gamepad1.left_stick_y>0.1){
+            M0_2.setPower(-1);}
+
     }
 
     //init sequence
@@ -60,6 +65,7 @@ public class DriveV1 extends OpMode {
         M3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         M0_2.setDirection(DcMotor.Direction.FORWARD);
         M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 

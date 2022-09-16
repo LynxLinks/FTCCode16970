@@ -21,17 +21,14 @@ public class DriveV1 extends OpMode {
     DcMotor M0_2;
     Servo S0;
 
-    double ArmPosition = 0;
-    double GripPosition = 0;
-    double Max = 1, Min = 0;
-
-
     public void ServoClamp() {
+        double Open = .1;
+        double Close = .2;
 
         // open the gripper on X button if not already at most open position.
-        if (gamepad1.x) S0.setPosition(.1);
+        if (gamepad1.x) S0.setPosition(Open);
 
-        if (gamepad1.y) S0.setPosition(.5);
+        if (gamepad1.y) S0.setPosition(Close);
     }
 
     //drive loop
@@ -87,6 +84,7 @@ public class DriveV1 extends OpMode {
         M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
     //loop while init

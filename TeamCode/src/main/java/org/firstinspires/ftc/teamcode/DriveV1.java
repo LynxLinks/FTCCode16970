@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 //name and class
 
-@TeleOp(name = "DriveV2", group="Linear Opmode")
+@TeleOp(name = "DriveV3", group="Linear Opmode")
 
 
 public class DriveV1 extends OpMode {
@@ -20,15 +21,15 @@ public class DriveV1 extends OpMode {
     DcMotor M3;
     DcMotor M0_2;
     Servo S0;
+    DigitalChannel D0;
 
     public void ServoClamp() {
-        double Open = .1;
-        double Close = .2;
 
-        // open the gripper on X button if not already at most open position.
-        if (gamepad1.x) S0.setPosition(Open);
+        if (D0.getState() == true) S0.setPosition(.63);
 
-        if (gamepad1.y) S0.setPosition(Close);
+        if (gamepad1.x) S0.setPosition(.1);
+
+        if (gamepad1.y) S0.setPosition(.63);
     }
 
     //drive loop
@@ -70,6 +71,7 @@ public class DriveV1 extends OpMode {
         M3 = hardwareMap.get(DcMotor.class,"M3");
         M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
         S0 = hardwareMap.get(Servo.class,"S0");
+        D0 = hardwareMap.get(DigitalChannel.class,"D0");
 
         //Set Motors
         M0.setDirection(DcMotor.Direction.FORWARD);

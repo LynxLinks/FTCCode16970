@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 //name and class
 
@@ -18,6 +19,23 @@ public class DriveV1 extends OpMode {
     DcMotor M2;
     DcMotor M3;
     DcMotor M0_2;
+    Servo S0;
+
+    double ArmPosition = 0;
+    double GripPosition = 0;
+    double Max = 1, Min = 0;
+
+
+    public void ServoClamp() {
+
+        // open the gripper on X button if not already at most open position.
+        if (gamepad1.x && GripPosition < Max) GripPosition = GripPosition + .01;
+
+        // close the gripper on Y button if not already at the closed position.
+        if (gamepad1.y && GripPosition > Min) GripPosition = GripPosition - .01;
+
+        S0.setPosition(Range.clip(ArmPosition,Min,Max));
+    }
 
     //drive loop
     public void MoveDriveTrain(){
@@ -57,6 +75,7 @@ public class DriveV1 extends OpMode {
         M2 = hardwareMap.get(DcMotor.class,"M2");
         M3 = hardwareMap.get(DcMotor.class,"M3");
         M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
+        S0 = hardwareMap.get(Servo.class,"S0");
 
         //Set Motors
         M0.setDirection(DcMotor.Direction.FORWARD);
@@ -89,6 +108,7 @@ public class DriveV1 extends OpMode {
     @Override
     public void loop() {
         MoveDriveTrain();
+        ServoClamp();
 
     }
 

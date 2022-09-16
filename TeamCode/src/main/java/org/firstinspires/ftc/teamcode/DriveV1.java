@@ -29,12 +29,9 @@ public class DriveV1 extends OpMode {
     public void ServoClamp() {
 
         // open the gripper on X button if not already at most open position.
-        if (gamepad1.x && GripPosition < Max) GripPosition = GripPosition + .01;
+        if (gamepad1.x) S0.setPosition(.1);
 
-        // close the gripper on Y button if not already at the closed position.
-        if (gamepad1.y && GripPosition > Min) GripPosition = GripPosition - .01;
-
-        S0.setPosition(Range.clip(ArmPosition,Min,Max));
+        if (gamepad1.y) S0.setPosition(.5);
     }
 
     //drive loop

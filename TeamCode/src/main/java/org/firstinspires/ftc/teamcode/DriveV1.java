@@ -19,13 +19,13 @@ public class DriveV1 extends OpMode {
     DcMotor M1;
     DcMotor M2;
     DcMotor M3;
-   // DcMotor M0_2;
+    DcMotor M0_2;
     Servo S0;
     DigitalChannel D0;
 
     public void ServoClamp() {
 
-        if (D0.getState() == true) S0.setPosition(.63);
+        //if (D0.getState() == true) S0.setPosition(.63);
 
         if (gamepad1.x) S0.setPosition(.45);
         if (gamepad1.y) S0.setPosition(.63);
@@ -49,15 +49,24 @@ public class DriveV1 extends OpMode {
         M2.setPower(-(Rotate + (yAxis - xAxis)));
         M3.setPower(-(Rotate + (-yAxis - xAxis)));
 
-    /*
-        if (gamepad1.right_stick_y<-0.1) {
-            M0_2.setPower(1);}
-        else if (gamepad1.right_stick_y>0.1){
-            M0_2.setPower(-1);}
-        else {
+        //dowm
+        if (gamepad1.a) {
+            M0_2.setPower(1);
+        }
+        //up
+        if(gamepad1.b) {
+            M0_2.setPower(-1);
+        }
+        if(D0.getState() == true){
+            M0_2.setPower(0);
+            M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if(M0_2.getCurrentPosition() > 5 ) {
             M0_2.setPower(0);
         }
-    */
+
+
 
     }
 
@@ -70,7 +79,7 @@ public class DriveV1 extends OpMode {
         M1 = hardwareMap.get(DcMotor.class,"M1");
         M2 = hardwareMap.get(DcMotor.class,"M2");
         M3 = hardwareMap.get(DcMotor.class,"M3");
-       // M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
+        M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
         S0 = hardwareMap.get(Servo.class,"S0");
         D0 = hardwareMap.get(DigitalChannel.class,"D0");
 
@@ -83,13 +92,13 @@ public class DriveV1 extends OpMode {
         M2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         M3.setDirection(DcMotor.Direction.FORWARD);
         M3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-     /*
+
         M0_2.setDirection(DcMotor.Direction.FORWARD);
         M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-      */
+
 
     }
 

@@ -34,7 +34,7 @@ public class DriveV1 extends OpMode {
         if (gamepad1.y) S0.setPosition(.63);
         if(D1.getState() == true) S0.setPosition(.63);
     }
-
+`
     //drive loop
     public void MoveDriveTrain(){
         //drive variables
@@ -65,12 +65,14 @@ public class DriveV1 extends OpMode {
             M0_2.setPower(0);
             M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-        if(M0_2.getCurrentPosition() > 100 ) {
+        if(M0_2.getCurrentPosition() > 950) {
             M0_2.setPower(0);
         }
         telemetry.addData("slide count",M0_2.getCurrentPosition());
         telemetry.update();
+        //dick
 
 
     }

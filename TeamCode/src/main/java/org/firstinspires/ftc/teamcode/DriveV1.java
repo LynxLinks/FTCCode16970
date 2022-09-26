@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 //name and class
 
 @TeleOp(name = "DriveV3", group="Linear Opmode")
@@ -22,6 +24,7 @@ public class DriveV1 extends OpMode {
     DcMotor M0_2;
     Servo S0;
     DigitalChannel D0;
+    DigitalChannel D1;
 
     public void ServoClamp() {
 
@@ -29,6 +32,7 @@ public class DriveV1 extends OpMode {
 
         if (gamepad1.x) S0.setPosition(.45);
         if (gamepad1.y) S0.setPosition(.63);
+        if(D1.getState() == true) S0.setPosition(.63);
     }
 
     //drive loop
@@ -62,10 +66,11 @@ public class DriveV1 extends OpMode {
             M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-        if(M0_2.getCurrentPosition() > 5 ) {
+        if(M0_2.getCurrentPosition() > 100 ) {
             M0_2.setPower(0);
         }
-
+        telemetry.addData("slide count",M0_2.getCurrentPosition());
+        telemetry.update();
 
 
     }
@@ -82,6 +87,7 @@ public class DriveV1 extends OpMode {
         M0_2 = hardwareMap.get(DcMotor.class,"M0_2");
         S0 = hardwareMap.get(Servo.class,"S0");
         D0 = hardwareMap.get(DigitalChannel.class,"D0");
+        D1 = hardwareMap.get(DigitalChannel.class,"D1");
 
         //Set Motors
         M0.setDirection(DcMotor.Direction.FORWARD);

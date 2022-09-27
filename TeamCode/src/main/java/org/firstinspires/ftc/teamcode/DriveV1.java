@@ -31,8 +31,8 @@ public class DriveV1 extends OpMode {
         //if (D0.getState() == true) S0.setPosition(.63);
 
         if (gamepad1.x) S0.setPosition(.46);
-        if (gamepad1.y) S0.setPosition(.63);
-        if((D1.getState() == true) && (gamepad1.x == false)) S0.setPosition(.63);
+        if (gamepad1.y) S0.setPosition(.64);
+        if((D1.getState() == true) && (gamepad1.x == false)) S0.setPosition(.64);
     }
     //drive loop
     public void MoveDriveTrain(){
@@ -65,10 +65,22 @@ public class DriveV1 extends OpMode {
             M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            if (gamepad1.a) {
+                M0_2.setPower(1);
+                return;
+            }
         }
-        if(M0_2.getCurrentPosition() > 950) {
+        if(M0_2.getCurrentPosition() > 1050) {
             M0_2.setPower(0);
         }
+       /* if(M0_2.getCurrentPosition() > 800 && M0_2.getCurrentPosition() < 930){
+            M0_2.setPower(0.5);
+        }
+        if( M0_2.getCurrentPosition() < 200 && M0_2.getCurrentPosition() > 10 ){
+            M0_2.setPower(-0.5);
+        }
+
+        */
         telemetry.addData("slide count ",M0_2.getCurrentPosition());
         telemetry.addData("clamp ",D1.getState());
         telemetry.addData("slide ",D0.getState());

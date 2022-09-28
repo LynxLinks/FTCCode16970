@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class DriveV1 extends OpMode {
 
     //Define Motors
+    double target;
     DcMotor M0;
     DcMotor M1;
     DcMotor M2;
@@ -30,9 +31,9 @@ public class DriveV1 extends OpMode {
 
         //if (D0.getState() == true) S0.setPosition(.63);
 
-        if (gamepad1.x) S0.setPosition(.46);
-        if (gamepad1.y) S0.setPosition(.64);
-        if((D1.getState() == true) && (gamepad1.x == false)) S0.setPosition(.64);
+        if (gamepad1.left_bumper) S0.setPosition(.46);
+        if (gamepad1.right_bumper) S0.setPosition(.63);
+        if((D1.getState() == true) && (gamepad1.left_bumper == false)) S0.setPosition(.63);
     }
     //drive loop
     public void MoveDriveTrain(){
@@ -54,34 +55,29 @@ public class DriveV1 extends OpMode {
 
         //dowm
         if (gamepad1.a) {
-            M0_2.setPower(1);
+            target = 0;
         }
         //up
         if(gamepad1.b) {
-            M0_2.setPower(-1);
+            target = 2225;
         }
-        if(D0.getState() == true){
-            M0_2.setPower(0);
+        if(gamepad1.y) {
+            target = 1600;
+        }
+        if(gamepad1.x) {
+            target = 950;
+        }
+        if(D0.getState() && (target == 0)){
+            M0_2.setDirection(DcMotor.Direction.FORWARD);
             M0_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             M0_2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            if (gamepad1.a) {
-                M0_2.setPower(1);
-                return;
-            }
+            M0_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-        if(M0_2.getCurrentPosition() > 1050) {
-            M0_2.setPower(0);
-        }
-       /* if(M0_2.getCurrentPosition() > 800 && M0_2.getCurrentPosition() < 930){
-            M0_2.setPower(0.5);
-        }
-        if( M0_2.getCurrentPosition() < 200 && M0_2.getCurrentPosition() > 10 ){
-            M0_2.setPower(-0.5);
-        }
-
-        */
-        telemetry.addData("slide count ",M0_2.getCurrentPosition());
+        M0_2.setPower(-.5 * ((1 - Math.pow(10,((target - M0_2.getCurrentPosition())/100)))/(1 + Math.pow( 10,((target - M0_2.getCurrentPosition())/100)))));
+        telemetry.addData("current ",M0_2.getCurrentPosition());
+        telemetry.addData("delta", target - M0_2.getCurrentPosition());
+        telemetry.addData("target",target);
+        telemetry.addData("equation",-.5 * ((1 - Math.pow( 10,((target - M0_2.getCurrentPosition())/100)))/(1 + Math.pow( 10,((target - M0_2.getCurrentPosition())/100)))));
         telemetry.addData("clamp ",D1.getState());
         telemetry.addData("slide ",D0.getState());
         telemetry.update();
@@ -132,6 +128,7 @@ public class DriveV1 extends OpMode {
     //runs once after start is pressed
     @Override
     public void start(){
+        target = 0;
 
     }
 
